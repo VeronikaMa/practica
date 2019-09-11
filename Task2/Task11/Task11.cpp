@@ -4,9 +4,9 @@ using namespace std;
 
 int main()
 {
-	ifstream f("in.txt");
-	cout << f;
-	int c=0;
+	int c = 0;
+	fstream f("in.txt");
+	fstream g("out.txt");
 	char *a= new char [1000];
 	f.getline(a, 1000);
 	while (*a != 0) {
@@ -16,5 +16,5 @@ int main()
 		c++;
 	}
 	a = a - c;
-	cout << a;
+	g << a;
 }
