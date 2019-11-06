@@ -4,13 +4,14 @@
 #include <sstream>
 using namespace std;
 
-void razdel(string l, int k) {
+string razdel(string l, int k) {
 	string t;
 	int a, b,h=0,c=0,v=0,s=0,z;
 	for (int i = l.size(); i > k; i--){
 		if (l[i] >= '0' && l[i] <= '9') { t += l[i]; c++; }
 		else { t = ' '; c = 0; }
 	}
+	reverse(t.begin(), t.end());
 	b = atoi(t.c_str());
 	t = ' ';
 	for (int i = 0; i < k; i++) {
@@ -19,6 +20,7 @@ void razdel(string l, int k) {
 		}
 		else { t = ' '; v = 0; }
 	}
+
 	a = atoi(t.c_str());
 	t = ' ';
 	
@@ -42,8 +44,7 @@ void razdel(string l, int k) {
 	z = l.find('@');
 	l.erase(z,1);
 	l.insert(z, j);
-	cout << l;
-	
+	return l;
 }
 
 int main()
@@ -52,14 +53,38 @@ int main()
 	int p=0,m=0,x=0,d=0,r=0;
 	ifstream f("example.txt");
 	getline(f, line);
-	p = line.find('+');
-	m = line.find('-');
-	x = line.find('*');
-	d = line.find('/');
-	r= line.find('=');
-	if (x>0) razdel(line,x);
-	if (d>0) razdel(line, d);
-	if(p>0) razdel(line, p);
-	if(m>0) razdel(line, m);
-	if (r > 0) cout <<line<<endl;
+	cout << line;
+	int pos = -1, pos1 = -1;;
+	while (x>-1 || d>-1){
+		x = line.find('*');
+		d = line.find('/');
+		if (x == -1) {
+			pos = d;
+		}
+		else if (d == -1) {
+			pos = x;
+		} else {
+			pos = x > d ? d : x;
+		}
+		if (pos != -1)
+			line=razdel(line, pos);
+	}
+	while (p > -1 || m > -1){
+		p = line.find('+');
+		m = line.find('-');
+		if (m == -1) {
+			pos1 = p;
+		}
+		else if (p == -1) {
+			pos1 = m;
+		}
+		else {
+			pos1 = p > m ? m : p;
+		}
+		if(pos1!=-1)
+			line=razdel(line, pos1);
+	}
+	r = line.find('=');
+	line.erase(r, 1);
+	cout << line;
 }
