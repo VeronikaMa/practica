@@ -12,15 +12,36 @@ int main()
 	string str;
 	ifstream f("input.txt");
 	while (f >> str) {
-		if (str[0] >= '0' && str[0] <= '9' ) {
+		if (str == "(" ) {
 			obj.push(str); 
 		}
-		if (str == "+") {
-			k = obj.back();//+ сложение тута должно быть предположительно с  obj.back(obj.size()-1)
+		if (str == "[") {
+			obj.push(str); 
+		}
+		if (str == "{") {
+			obj.push(str);
+		}
+		if (str == "]") {
+			if (obj.size() && obj.back() == "[" ) {
+				obj.pop(); 
+			}
+			else {
+				cout << "No";
+				return 0;
+			}
 		}
 		if (str == ")") {
 			if (obj.size() && obj.back() == "(" ) {
 				obj.pop(); 
+			}
+			else {
+				cout << "No";
+				return 0;
+			}
+		}
+		if (str == "}") {
+			if (obj.size() && obj.back() == "{") {
+				obj.pop();
 			}
 			else {
 				cout << "No";
